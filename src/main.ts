@@ -18,10 +18,9 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle("Nest BE")
-    .setDescription("Nest BE")
+    .setTitle("Nest BE API Swagger ")
+    .setDescription("Nest BE API 입니다.")
     .setVersion('1.0')
-    .addTag('BE')
     .addBearerAuth(
       {
       type:'http',
@@ -34,7 +33,7 @@ async function bootstrap() {
       'accessToken')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, documentFactory)
+  SwaggerModule.setup('swagger', app, documentFactory)
 
   await app.listen(configService.get("LOCAL_PORT") ?? 3007
   );
