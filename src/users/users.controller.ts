@@ -18,9 +18,5 @@ export class UsersController {
         return { message: '회원가입이 완료되었습니다.' };
     }
 
-    @Get()
-    async findAllUsers(): Promise<UserResponseDto[]> {
-        return this.usersService.findAllUsers();
-    }
     
 }
