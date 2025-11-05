@@ -30,7 +30,7 @@ export class AuthController {
     }
 
     const payload = {
-      id: user.userid,
+      id: user.id,
     }
     
     // Access token 생성 (5분)
@@ -40,7 +40,7 @@ export class AuthController {
     const refreshToken = this.jwtRefreshService.sign(payload);
     
     // Refresh token을 DB에 저장
-    await this.userService.updateRefreshToken(user.userid, refreshToken);
+    await this.userService.updateRefreshToken(user.id, refreshToken);
 
     return { 
       accessToken,
@@ -72,7 +72,7 @@ export class AuthController {
 
     // 새로운 access token 발급
     const newPayload = {
-      id: user.userid,
+      id: user.id,
     };
     const accessToken = this.jwtService.sign(newPayload);
 
