@@ -22,6 +22,16 @@ async function bootstrap() {
     .setDescription("Nest BE")
     .setVersion('1.0')
     .addTag('BE')
+    .addBearerAuth(
+      {
+      type:'http',
+      scheme: 'bearer',
+      bearerFormat : 'JWT',
+      name : 'JWT',
+      description : "Enter JWT Token",
+      in: 'header'
+      },
+      'accessToken')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, documentFactory)

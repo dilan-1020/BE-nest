@@ -2,12 +2,13 @@ import { Controller, Post, Body,Get, UnauthorizedException,UseGuards, Req} from 
 import { JwtService } from "@nestjs/jwt";
 import { Inject } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
-import { LoginUserDto } from "./dto/auth.dto";
+import { LoginUserDto, RefreshDto } from "./dto/auth.dto";
 import * as bcrypt from "bcryptjs";
+import { ApiOperation,ApiBearerAuth,ApiBody } from "@nestjs/swagger"
 
 import { AuthGuard } from "./guard/auth.guard";
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     private readonly userService: UsersService,
@@ -15,6 +16,7 @@ export class AuthController {
     @Inject('JWT_REFRESH') private readonly jwtRefreshService: JwtService,
   ) {}
 
+  @ApiOperation({ summary : '로그인'})
   @Post('/signin')
   async signin(@Body() authDTO: LoginUserDto) {
     const { email, password } = authDTO;
@@ -48,6 +50,8 @@ export class AuthController {
     };
   }
 
+  @ApiOperation({ summary : '토큰 재발급'})
+  @ApiBody({type : RefreshDto})
   @Post('/refresh')
   async refresh(@Body() body: { refreshToken: string }) {
     const { refreshToken } = body;
@@ -78,7 +82,9 @@ export class AuthController {
 
     return { accessToken };
   }
+  @ApiOperation({ summary : '내 정보확인'})
   @UseGuards(AuthGuard)
+  @ApiBearerAuth('accessToken')
   @Get('/')
   async getProfile(@Req() req: any) {
     const user = req.user;
