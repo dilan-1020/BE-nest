@@ -12,14 +12,36 @@ export class UsersController {
     @ApiResponse({
         status : 201,
         description : '회원가입 성공',
+        
     })
     @ApiResponse({
         status : 409,
         description : '이미 가입된 계정입니다.',
-    })
+        schema : {
+            properties:{
+              message : {
+                type : 'string',
+                description : 'message',
+                example : "이미 사용 중인 이메일입니다."
+              },
+              error : {
+                type : 'string',
+                description : 'error',
+                example : "Conflict"
+              },
+              statusCode : {
+                type : 'string',
+                description : 'statusCode',
+                example : "409"
+              }
+            },
+            
+          }
+    },)
     @ApiResponse({
       status : 500,
       description : '서버 에러',
+      
     })
     @Post()
     async createUser(@Body() createUserDto: CreateUserDto): Promise<{ message: string }> {
