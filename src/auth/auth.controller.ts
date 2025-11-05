@@ -20,14 +20,51 @@ export class AuthController {
   @ApiResponse({
     status : 201,
     description : '회원가입 성공',
+    schema : {
+      properties:{
+        accessToken : {
+          type : 'string',
+          description : 'accessToken',
+          example : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyMzMzNTAyLCJleHAiOjE3NjIzMzM4MDJ9.GJwpbdiXV6aELcK2o_jH8QPfqrlzrm9UZZCqFtDsLqU"
+        },
+        refreshToken : {
+          type : 'string',
+          description : 'refreshToken',
+          example : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyMzMzNTAyLCJleHAiOjE3NjI5MzgzMDJ9.T3GAZ9nTu4xpg6pvPr-VoRRn6PkBp7JMwcRrceAHCnY"
+        }
+      },
+      
+    }
+    
   })
   @ApiResponse({
     status : 401,
     description : '이메일 또는 비밀번호 확인해주세요.',
+    schema : {
+      properties:{
+        message : {
+          type : 'string',
+          description : 'message',
+          example : "이메일 또는 비밀번호를 확인해 주세요."
+        },
+        error : {
+          type : 'string',
+          description : 'error',
+          example : "Conflict"
+        },
+        statusCode : {
+          type : 'string',
+          description : 'statusCode',
+          example : "409"
+        }
+      },
+      
+    }
   })
   @ApiResponse({
     status : 500,
     description : '서버 에러',
+    
   })
   @Post('/signin')
   async signin(@Body() authDTO: LoginUserDto) {
@@ -67,14 +104,45 @@ export class AuthController {
   @ApiResponse({
     status : 200,
     description : '토큰 재발급 성공',
+    schema : {
+      properties:{
+        accessToken : {
+          type : 'string',
+          description : 'accessToken',
+          example : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyMzMzNTAyLCJleHAiOjE3NjIzMzM4MDJ9.GJwpbdiXV6aELcK2o_jH8QPfqrlzrm9UZZCqFtDsLqU"
+        }
+      },
+      
+    }
   })
   @ApiResponse({
     status : 401,
     description : '유효하지 않은 토큰입니다.',
+    schema : {
+      properties:{
+        message : {
+          type : 'string',
+          description : 'message',
+          example : "유효하지 않은 refresh token입니다."
+        },
+        error : {
+          type : 'string',
+          description : 'error',
+          example : "Unauthorized"
+        },
+        statusCode : {
+          type : 'string',
+          description : 'statusCode',
+          example : "401"
+        }
+      },
+      
+    }
   })
   @ApiResponse({
     status : 500,
     description : '서버 에러',
+    
   })
   @Post('/refresh')
   async refresh(@Body() body: { refreshToken: string }) {
@@ -112,14 +180,75 @@ export class AuthController {
   @ApiResponse({
     status : 200,
     description : '유저 정보 조회 성공',
+    schema : {
+      properties:{
+        id : {
+          type : 'string',
+          description : 'id',
+          example : "1"
+        },
+        name : {
+          type : 'string',
+          description : 'name',
+          example : "dilan",
+        },
+        email : {
+          type : 'string',
+          description : 'email',
+          example : "test@netstream.co.kr",
+        },
+        password : {
+          type : 'string',
+          description : 'password',
+          example : "$2b$10$kGW/mxCSOS/BiuTzz7MynezWEjsLK5lafNO/tucOi9NY25Dbu6E4W",
+        },
+        phone_number : {
+          type : 'string',
+          description : 'phone_number',
+          example : "010-1111-2222",
+        },
+        refresh_token : {
+          type : 'string',
+          description : 'refresh_token',
+          example : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyMzMzOTc0LCJleHAiOjE3NjI5Mzg3NzR9.qeNtDUCXF3W4g6JM17QWnPRS7S0Cq6vhI5kQoTPKuT0",
+        },
+        createdAt : {
+          type : 'string',
+          description : 'createdAt',
+          example : "2025-11-04T18:48:12.526Z",
+        },
+        updatedAt : {
+          type : 'string',
+          description : 'updatedAt',
+          example : "2025-11-05T00:12:55.000Z",
+        }
+      },
+      
+    }
   })
   @ApiResponse({
     status : 401,
     description : '권한이 없습니다.',
+    schema : {
+      properties:{
+        error : {
+          type : 'string',
+          description : 'error',
+          example : "Unauthorized"
+        },
+        statusCode : {
+          type : 'string',
+          description : 'statusCode',
+          example : "401"
+        }
+      },
+      
+    }
   })
   @ApiResponse({
     status : 500,
     description : '서버 에러',
+    
   })
   @Get('/')
   async getProfile(@Req() req: any) {
