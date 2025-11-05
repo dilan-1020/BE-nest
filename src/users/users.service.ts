@@ -37,7 +37,7 @@ export class UsersService {
         const users = await this.usersRepository.findAllUsers();
         // Entity → Response DTO 변환 (비밀번호 제외)
         return users.map(user => ({
-            userid: user.userid,
+            id: user.id,
             name: user.name,
             email: user.email,
             phone_number: user.phone_number,
@@ -50,12 +50,12 @@ export class UsersService {
         return this.usersRepository.findByEmail(email);
     }
 
-    async findById(userid: number): Promise<User | null> {
-        return this.usersRepository.findById(userid);
+    async findById(id: number): Promise<User | null> {
+        return this.usersRepository.findById(id);
     }
 
-    async updateRefreshToken(userid: number, refreshToken: string): Promise<void> {
-        return this.usersRepository.updateRefreshToken(userid, refreshToken);
+    async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
+        return this.usersRepository.updateRefreshToken(id, refreshToken);
     }
 
     async findByRefreshToken(refreshToken: string): Promise<User | null> {

@@ -12,7 +12,7 @@ export class LoginUserDto {
 
 // Response DTO (비밀번호 등 민감한 정보 제외)
 export class UserResponseDto {
-    userid: number;
+    id: number;
     name: string;
     email: string;
     phone_number: string;

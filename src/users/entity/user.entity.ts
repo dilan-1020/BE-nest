@@ -1,10 +1,10 @@
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('User')
+@Entity('user')
 export class User {
     @PrimaryGeneratedColumn('increment')
     @Index({ unique: true })
-    userid : number;
+    id : number;
 
     @Column({ type: 'varchar', length: 100 })
     name : string;

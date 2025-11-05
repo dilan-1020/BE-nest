@@ -26,7 +26,7 @@ export class UsersRepository {
         this.logger.log(`[FIND ALL] ✅ Found ${users.length} users from User table`);
         if (users.length > 0) {
             users.forEach((user, index) => {
-                this.logger.log(`[FIND ALL] User ${index + 1}: ID=${user.userid}, Email=${user.email}, Name=${user.name}`);
+                this.logger.log(`[FIND ALL] User ${index + 1}: ID=${user.id}, Email=${user.email}, Name=${user.name}`);
             });
         }
         return users;
@@ -40,17 +40,17 @@ export class UsersRepository {
         return user || null;
     }
 
-    async findById(userid: number): Promise<User | null> {
-        this.logger.log(`[FIND BY ID] Querying User table for ID: ${userid}`);
+    async findById(id: number): Promise<User | null> {
+        this.logger.log(`[FIND BY ID] Querying User table for ID: ${id}`);
         const user = await this.userRepository.findOne({
-            where: { userid }
+            where: { id }
         });
         return user || null;
     }
 
-    async updateRefreshToken(userid: number, refreshToken: string): Promise<void> {
-        this.logger.log(`[UPDATE REFRESH TOKEN] Updating refresh token for user ID: ${userid}`);
-        await this.userRepository.update(userid, { refresh_token: refreshToken });
+    async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
+        this.logger.log(`[UPDATE REFRESH TOKEN] Updating refresh token for user ID: ${id}`);
+        await this.userRepository.update(id, { refresh_token: refreshToken });
         this.logger.log(`[UPDATE REFRESH TOKEN] ✅ Refresh token updated successfully`);
     }
 
